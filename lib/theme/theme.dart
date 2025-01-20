@@ -18,7 +18,6 @@ class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: backgroundColor,
     colorScheme: const ColorScheme.dark(
-      background: backgroundColor,
       primary: primaryText,
       secondary: secondaryText,
       error: incorrectAnswer,

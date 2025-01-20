@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quizcreator/database/database_helper.dart';
 import 'package:quizcreator/screens/button_app.dart';
 import 'package:quizcreator/screens/quiz_screen.dart';
@@ -95,7 +96,8 @@ class _CreateQuizState extends State<CreateQuiz> {
           return;
         }
 
-        if (q['options'] is! List || q['options'].isEmpty) {
+        if (q['options'] is! List ||
+            q['options'].isEmpty && q['type'] == 'MSQ') {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
                 content: Text('The "options" field must be a non-empty list.')),
@@ -132,9 +134,11 @@ class _CreateQuizState extends State<CreateQuiz> {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
     }
   }
 
@@ -201,38 +205,81 @@ class _CreateQuizState extends State<CreateQuiz> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _questionsController,
-                  style: TextStyle(color: AppTheme.primaryText),
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'JSON Questions\n e.g.\n $exampleQuestions',
-                    hintStyle: TextStyle(
-                      color: AppTheme.secondaryText,
-                      fontSize: 16,
-                    ),
-                    filled: true,
-                    fillColor: AppTheme.surfaceColor,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: AppTheme.borderColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(
-                        color: primaryColor,
-                        width: 2,
+                child: Stack(
+                  children: [
+                    TextFormField(
+                      controller: _questionsController,
+                      style: TextStyle(color: AppTheme.primaryText),
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        hintText: 'JSON Questions\n e.g.\n $exampleQuestions',
+                        hintStyle: TextStyle(
+                          color: AppTheme.secondaryText,
+                          fontSize: 12,
+                        ),
+                        filled: true,
+                        fillColor: AppTheme.surfaceColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: AppTheme.borderColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: AppTheme.borderColor),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: AppTheme.borderColor),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                  ),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Clipboard.setData(
+                                    ClipboardData(text: exampleQuestions),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Example JSON copied!'),
+                                      behavior: SnackBarBehavior.floating,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.copy_all_rounded)),
+                            IconButton(
+                                onPressed: () async {
+                                  final clipboardData = await Clipboard.getData(
+                                      Clipboard.kTextPlain);
+                                  if (clipboardData?.text != null) {
+                                    _questionsController.text =
+                                        _formatJson(clipboardData!.text!);
+                                  }
+                                  if(mounted){
+                                    // ignore: use_build_context_synchronously
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('✨ JSON data pasted'),
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
+                                    );
+                                  }
+                                },
+                                icon: const Icon(Icons.paste)),
+                          ],
+                        )),
+                  ],
                 ),
               ),
             ),
@@ -241,7 +288,7 @@ class _CreateQuizState extends State<CreateQuiz> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ButtonApp(
-                  text: 'Create Quiz',
+                  text: 'Add Quiz',
                   onPressed: _saveQuiz,
                 ),
               ),

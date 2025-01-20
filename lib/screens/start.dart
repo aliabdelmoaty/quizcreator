@@ -89,7 +89,7 @@ class _StartState extends State<Start> {
   }
 }
 
-class CardLec extends StatelessWidget {
+class CardLec extends StatefulWidget {
   const CardLec({
     super.key,
     required this.title,
@@ -102,6 +102,11 @@ class CardLec extends StatelessWidget {
   final int questionCount;
 
   @override
+  State<CardLec> createState() => _CardLecState();
+}
+
+class _CardLecState extends State<CardLec> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
@@ -110,7 +115,8 @@ class CardLec extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Delete Quiz'),
-              content: Text('Are you sure you want to delete "$title"?'),
+              content:
+                  Text('Are you sure you want to delete "${widget.title}"?'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -121,14 +127,24 @@ class CardLec extends StatelessWidget {
                 TextButton(
                   onPressed: () async {
                     // Delete from database
-                    await DatabaseHelper.instance.deleteQuiz(title);
+                    await DatabaseHelper.instance.deleteQuiz(widget.title);
+
+                    setState(() {
+                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Start()),
+                        (route) => false,
+                      );
+                    });
                     // Close dialog
-                    Navigator.pop(context);
-                    // Refresh the Start screen
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Start()),
-                    );
+
+                    // // Navigator.pop(context);
+                    // Navigator.pushAndRemoveUntil(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const Start()),
+                    //   (route) => false,
+                    // );
                   },
                   child: Text('Delete', style: TextStyle(color: Colors.red)),
                 ),
@@ -139,13 +155,13 @@ class CardLec extends StatelessWidget {
       },
       onTap: () {
         final formattedQuestions =
-            questions.map((q) => Map<String, dynamic>.from(q)).toList();
+            widget.questions.map((q) => Map<String, dynamic>.from(q)).toList();
 
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => QuizScreen(
-              title: title,
+              title: widget.title,
               questions: formattedQuestions,
             ),
           ),
@@ -168,7 +184,7 @@ class CardLec extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    title,
+                    widget.title,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -178,7 +194,7 @@ class CardLec extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '$questionCount Questions',
+                '${widget.questionCount} Questions',
                 style: TextStyle(
                   color: Colors.grey[300],
                   fontSize: 14,

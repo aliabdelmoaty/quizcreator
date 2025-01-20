@@ -15,7 +15,7 @@ class Progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
-      value: indexQ / questions.length,
+      value: (indexQ + 1) / questions.length,
       borderRadius:
           BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
       backgroundColor: AppTheme.progressBarBackground,
