@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quizcreator/model/questions.dart';
 import 'package:quizcreator/screens/build_legend_item.dart';
 import 'package:quizcreator/screens/button_app.dart';
@@ -229,9 +230,15 @@ class _QuizScreenState extends State<QuizScreen> {
         children: [
           TextFormField(
             controller: controller,
+            autofocus: true,
+            spellCheckConfiguration: SpellCheckConfiguration(
+              spellCheckService:
+                  DefaultSpellCheckService(), // Underline misspelled words
+            ),
+            keyboardType: TextInputType.text,
             style: TextStyle(color: AppTheme.primaryText),
             maxLines: null,
-            onChanged: (value) {
+            onFieldSubmitted: (value) {
               setState(() {
                 hasAnswered = value.trim().isNotEmpty;
                 isCorrect = value.trim().toLowerCase() ==
@@ -245,7 +252,57 @@ class _QuizScreenState extends State<QuizScreen> {
                   SnackBar(
                     content: Text('Correct! Well done!'),
                     backgroundColor: Colors.green,
-                    duration: const Duration(seconds: 1),
+                    duration: const Duration(milliseconds: 300),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+              }
+            },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              setState(() {
+                hasAnswered = controller.text.trim().isNotEmpty;
+                isCorrect = controller.text.trim().toLowerCase() ==
+                    shuffledQuestions[currentQuestionIndex]
+                        .answer
+                        .toLowerCase();
+              });
+
+              if (isCorrect) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Correct! Well done!'),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(milliseconds: 300),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+              }
+            },
+            onChanged: (value) {
+              setState(() {
+                hasAnswered = value.trim().isNotEmpty;
+                isCorrect = value.trim().toLowerCase() ==
+                    shuffledQuestions[currentQuestionIndex]
+                        .answer
+                        .toLowerCase();
+              });
+
+              if (isCorrect) {
+                FocusScope.of(context).unfocus();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Correct! Well done!'),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(milliseconds: 300),
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(

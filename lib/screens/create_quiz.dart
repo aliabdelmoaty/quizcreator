@@ -211,6 +211,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                       controller: _questionsController,
                       style: TextStyle(color: AppTheme.primaryText),
                       maxLines: null,
+                      maxLengthEnforcement : MaxLengthEnforcement.none,
                       decoration: InputDecoration(
                         hintText: 'JSON Questions\n e.g.\n $exampleQuestions',
                         hintStyle: TextStyle(
