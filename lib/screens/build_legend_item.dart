@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizcreator/theme/theme.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class BuildLegendItem extends StatelessWidget {
   const BuildLegendItem({super.key, required this.label, required this.color});
@@ -23,7 +24,7 @@ class BuildLegendItem extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: AppTheme.primaryText,
+              color: ColorsApp.primaryText,
               fontSize: 12,
             ),
           ),

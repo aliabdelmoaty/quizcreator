@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class AppTheme {
   // Color constants
-  static const Color backgroundColor = Color(0xFF121212);
-  static const Color primaryText = Color(0xFFFFFFFF);
-  static const Color secondaryText = Color(0xFF8E8E8E);
-  static const Color correctAnswer = Color(0xFF4CAF50);
-  static const Color incorrectAnswer = Color(0xFFF44336);
-  static const Color buttonColor = Color(0xFF373737);
-  static const Color progressBarBackground = Color(0xFF555555);
-  static const Color surfaceColor = Color(0xFF1E1E1E);  // Added surface color
-  static const Color borderColor = Color(0xFF2C2C2C);   // Added border color
-
+ 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: backgroundColor,
+    scaffoldBackgroundColor: ColorsApp.backgroundColor,
     colorScheme: const ColorScheme.dark(
-      primary: primaryText,
-      secondary: secondaryText,
-      error: incorrectAnswer,
-      surface: surfaceColor,    // Updated to use surfaceColor
+      primary: ColorsApp.primaryText,
+      secondary: ColorsApp.secondaryText,
+      error: ColorsApp.incorrectAnswer,
+      surface: ColorsApp.surfaceColor,    
     ),
     
     // Typography
@@ -29,26 +21,26 @@ class AppTheme {
       displayLarge: GoogleFonts.openSans(
         fontSize: 32,
         fontWeight: FontWeight.bold,
-        color: primaryText,
+        color: ColorsApp.primaryText,
       ),
       displayMedium: GoogleFonts.openSans(
         fontSize: 28,
         fontWeight: FontWeight.bold,
-        color: primaryText,
+        color: ColorsApp.primaryText,
       ),
       bodyLarge: GoogleFonts.roboto(
         fontSize: 20,
-        color: primaryText,
+        color: ColorsApp.primaryText,
         height: 1.5,
       ),
       bodyMedium: GoogleFonts.roboto(
         fontSize: 18,
-        color: primaryText,
+        color: ColorsApp.primaryText,
         height: 1.5,
       ),
       bodySmall: GoogleFonts.roboto(
         fontSize: 16,
-        color: secondaryText,
+        color: ColorsApp.secondaryText,
         height: 1.6,
       ),
     ),
@@ -56,8 +48,8 @@ class AppTheme {
     // Button Theme
      elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
-        foregroundColor: primaryText,
+        backgroundColor: ColorsApp.buttonColor,
+        foregroundColor: ColorsApp.primaryText,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -67,13 +59,13 @@ class AppTheme {
 
     // Progress Indicator Theme
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: primaryText,
-      linearTrackColor: progressBarBackground,
+      color: ColorsApp.primaryText,
+      linearTrackColor: ColorsApp.progressBarBackground,
     ),
 
     // Card Theme
     cardTheme: CardTheme(
-      color: buttonColor,
+      color: ColorsApp.buttonColor,
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -82,7 +74,7 @@ class AppTheme {
 
     // Icon Theme
     iconTheme: const IconThemeData(
-      color: primaryText,
+      color: ColorsApp.primaryText,
       size: 24,
     ),
   );

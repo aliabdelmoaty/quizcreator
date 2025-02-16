@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizcreator/theme/theme.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class ButtonApp extends StatelessWidget {
   const ButtonApp({
@@ -13,8 +14,8 @@ class ButtonApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppTheme.buttonColor,
-        foregroundColor: AppTheme.primaryText,
+        backgroundColor: ColorsApp.buttonColor,
+        foregroundColor: ColorsApp.primaryText,
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

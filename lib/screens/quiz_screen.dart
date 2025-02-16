@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quizcreator/model/questions.dart';
+import 'package:quizcreator/features/quiz/data/models/questions.dart';
 import 'package:quizcreator/screens/build_legend_item.dart';
 import 'package:quizcreator/screens/button_app.dart';
 import 'package:quizcreator/screens/progress.dart';
 import 'package:quizcreator/screens/quiz_card.dart';
 import 'package:quizcreator/screens/review_screen.dart';
 import 'package:quizcreator/screens/start.dart';
-import 'package:quizcreator/theme/theme.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class QuizScreen extends StatefulWidget {
   final String title;
@@ -63,7 +63,7 @@ class _QuizScreenState extends State<QuizScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Please select an answer.'),
-            backgroundColor: Colors.red,
+            backgroundColor: ColorsApp.incorrectAnswer,
           ),
         );
         return;
@@ -72,7 +72,7 @@ class _QuizScreenState extends State<QuizScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please enter an answer.'),
-          backgroundColor: Colors.red,
+          backgroundColor: ColorsApp.incorrectAnswer,
         ),
       );
       return;
@@ -123,7 +123,7 @@ class _QuizScreenState extends State<QuizScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          backgroundColor: AppTheme.surfaceColor,
+          backgroundColor: ColorsApp.surfaceColor,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -138,7 +138,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 Text(
                   'Quiz Results',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: AppTheme.primaryText,
+                        color: ColorsApp.primaryText,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -146,7 +146,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 Text(
                   '${percentage.toStringAsFixed(1)}%',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: AppTheme.primaryText,
+                        color: ColorsApp.primaryText,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -154,7 +154,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 Text(
                   '$correctAnswers out of ${shuffledQuestions.length} correct',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: AppTheme.secondaryText,
+                        color: ColorsApp.secondaryText,
                       ),
                 ),
                 const SizedBox(height: 24),
@@ -163,7 +163,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.buttonColor,
+                        backgroundColor: ColorsApp.buttonColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -177,13 +177,13 @@ class _QuizScreenState extends State<QuizScreen> {
                             horizontal: 16, vertical: 12),
                         child: Text(
                           'Home',
-                          style: TextStyle(color: AppTheme.primaryText),
+                          style: TextStyle(color: ColorsApp.primaryText),
                         ),
                       ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.buttonColor,
+                        backgroundColor: ColorsApp.buttonColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -197,7 +197,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         child: Text(
                           'Review',
-                          style: TextStyle(color: AppTheme.primaryText),
+                          style: TextStyle(color: ColorsApp.primaryText),
                         ),
                       ),
                     ),
@@ -231,12 +231,9 @@ class _QuizScreenState extends State<QuizScreen> {
           TextFormField(
             controller: controller,
             autofocus: true,
-            spellCheckConfiguration: SpellCheckConfiguration(
-              spellCheckService:
-                  DefaultSpellCheckService(), // Underline misspelled words
-            ),
+            enableSuggestions: false,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: AppTheme.primaryText),
+            style: TextStyle(color: ColorsApp.primaryText),
             maxLines: null,
             onFieldSubmitted: (value) {
               setState(() {
@@ -251,7 +248,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Correct! Well done!'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: ColorsApp.correctAnswer,
                     duration: const Duration(milliseconds: 300),
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.all(10),
@@ -276,7 +273,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Correct! Well done!'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: ColorsApp.correctAnswer,
                     duration: const Duration(milliseconds: 300),
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.all(10),
@@ -301,7 +298,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Correct! Well done!'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: ColorsApp.correctAnswer,
                     duration: const Duration(milliseconds: 300),
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.all(10),
@@ -315,29 +312,31 @@ class _QuizScreenState extends State<QuizScreen> {
             decoration: InputDecoration(
               hintText: 'Enter your answer in complete words...',
               hintStyle: TextStyle(
-                color: AppTheme.secondaryText,
+                color: ColorsApp.secondaryText,
                 fontSize: 12,
               ),
               filled: true,
               fillColor: isCorrect
-                  ? Colors.green.withOpacity(0.2)
+                  ? ColorsApp.correctAnswer
                   : hasAnswered
-                      ? Colors.red.withOpacity(0.2)
-                      : AppTheme.surfaceColor,
+                      ? ColorsApp.incorrectAnswer
+                      : ColorsApp.surfaceColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppTheme.borderColor),
+                borderSide: BorderSide(color: ColorsApp.borderColor),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
-                  color: isCorrect ? Colors.green : Colors.red,
+                  color: isCorrect
+                      ? ColorsApp.correctAnswer
+                      : ColorsApp.incorrectAnswer,
                   width: 2,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppTheme.borderColor),
+                borderSide: BorderSide(color: ColorsApp.borderColor),
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
@@ -346,7 +345,9 @@ class _QuizScreenState extends State<QuizScreen> {
               suffixIcon: hasAnswered
                   ? Icon(
                       isCorrect ? Icons.check_circle : Icons.cancel,
-                      color: isCorrect ? Colors.green : Colors.red,
+                      color: isCorrect
+                          ? ColorsApp.correctAnswer
+                          : ColorsApp.incorrectAnswer,
                     )
                   : null,
             ),
@@ -356,7 +357,8 @@ class _QuizScreenState extends State<QuizScreen> {
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
                 'Please enter your answer before proceeding.',
-                style: TextStyle(color: Colors.red, fontSize: 12),
+                style:
+                    TextStyle(color: ColorsApp.incorrectAnswer, fontSize: 12),
               ),
             ),
         ],
@@ -429,7 +431,7 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       endDrawer: Drawer(
         child: Container(
-          color: AppTheme.surfaceColor,
+          color: ColorsApp.surfaceColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -444,7 +446,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     Text(
                       widget.title,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: AppTheme.secondaryText,
+                            color: ColorsApp.secondaryText,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -452,7 +454,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     Text(
                       'Progress: ${_userAnswers.where((answer) => answer['answer'] != null).length}/${shuffledQuestions.length} questions',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: AppTheme.secondaryText,
+                            color: ColorsApp.secondaryText,
                           ),
                     ),
                   ],
@@ -463,7 +465,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: Text(
                   'Questions Overview',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: AppTheme.primaryText,
+                        color: ColorsApp.primaryText,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -511,7 +513,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               style: TextStyle(
                                 color: currentQuestionIndex == index
                                     ? Theme.of(context).primaryColor
-                                    : AppTheme.primaryText,
+                                    : ColorsApp.primaryText,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -519,7 +521,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               Icon(
                                 Icons.check_circle,
                                 size: 12,
-                                color: AppTheme.primaryText,
+                                color: ColorsApp.primaryText,
                               ),
                           ],
                         ),
@@ -538,11 +540,11 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                     BuildLegendItem(
                       label: 'Answered',
-                      color: AppTheme.correctAnswer,
+                      color: ColorsApp.correctAnswer,
                     ),
                     BuildLegendItem(
                       label: 'Unanswered',
-                      color: AppTheme.buttonColor,
+                      color: ColorsApp.buttonColor,
                     ),
                   ],
                 ),
@@ -605,11 +607,11 @@ class _QuizScreenState extends State<QuizScreen> {
                     child: Card(
                       color: selectedAnswerIndex == index
                           ? (isCorrect
-                              ? AppTheme.correctAnswer
-                              : AppTheme.incorrectAnswer)
+                              ? ColorsApp.correctAnswer
+                              : ColorsApp.incorrectAnswer)
                           : (isAnswerCorrect && selectedAnswerIndex != null)
-                              ? AppTheme.correctAnswer
-                              : AppTheme.buttonColor,
+                              ? ColorsApp.correctAnswer
+                              : ColorsApp.buttonColor,
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -631,7 +633,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   .textTheme
                                   .bodySmall!
                                   .copyWith(
-                                    color: AppTheme.primaryText,
+                                    color: ColorsApp.primaryText,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -669,9 +671,9 @@ class _QuizScreenState extends State<QuizScreen> {
   Color _getQuestionColor(int index) {
     if (_userAnswers[index]['answer'] != null) {
       return _userAnswers[index]['isCorrect']
-          ? AppTheme.correctAnswer.withOpacity(0.7)
-          : AppTheme.incorrectAnswer.withOpacity(0.7);
+          ? ColorsApp.correctAnswer.withValues(alpha: 0.7)
+          : ColorsApp.incorrectAnswer.withValues(alpha: 0.7);
     }
-    return AppTheme.buttonColor;
+    return ColorsApp.buttonColor;
   }
 }

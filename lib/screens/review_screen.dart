@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizcreator/model/questions.dart';
+import 'package:quizcreator/features/quiz/data/models/questions.dart';
 
 class ReviewScreen extends StatelessWidget {
   final List<Question> questions;

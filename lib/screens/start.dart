@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:quizcreator/database/database_helper.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
+import 'package:quizcreator/utils/database/database_helper.dart';
 import 'package:quizcreator/screens/create_quiz.dart';
 import 'package:quizcreator/screens/quiz_screen.dart';
 import 'package:quizcreator/theme/theme.dart';
@@ -168,7 +169,7 @@ class _CardLecState extends State<CardLec> {
         );
       },
       child: Card(
-        color: AppTheme.progressBarBackground,
+        color: ColorsApp.progressBarBackground,
         elevation: 6,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),

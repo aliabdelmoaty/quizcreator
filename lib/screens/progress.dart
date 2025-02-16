@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quizcreator/model/questions.dart';
+import 'package:quizcreator/features/quiz/data/models/questions.dart';
 import 'package:quizcreator/theme/theme.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class Progress extends StatelessWidget {
   const Progress({
@@ -18,8 +19,8 @@ class Progress extends StatelessWidget {
       value: (indexQ + 1) / questions.length,
       borderRadius:
           BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-      backgroundColor: AppTheme.progressBarBackground,
-      valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryText),
+      backgroundColor: ColorsApp.progressBarBackground,
+      valueColor: AlwaysStoppedAnimation<Color>(ColorsApp.primaryText),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quizcreator/model/questions.dart';
+import 'package:quizcreator/features/quiz/data/models/questions.dart';
 import 'package:quizcreator/theme/theme.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
 
 class QuizCard extends StatelessWidget {
   const QuizCard({
@@ -17,7 +18,7 @@ class QuizCard extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Card(
-        color: AppTheme.progressBarBackground,
+        color: ColorsApp.progressBarBackground,
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius:

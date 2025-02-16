@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quizcreator/database/database_helper.dart';
+import 'package:quizcreator/utils/constant/colors.dart';
+import 'package:quizcreator/utils/database/database_helper.dart';
 import 'package:quizcreator/screens/button_app.dart';
 import 'package:quizcreator/screens/quiz_screen.dart';
 import 'package:quizcreator/theme/theme.dart';
@@ -151,19 +152,19 @@ class _CreateQuizState extends State<CreateQuiz> {
         elevation: 2,
         title: Text(
           'Create Quiz',
-          style: TextStyle(color: AppTheme.primaryText),
+          style: TextStyle(color: ColorsApp.primaryText),
         ),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back,
-            color: AppTheme.primaryText,
+            color: ColorsApp.primaryText,
           ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: AppTheme.backgroundColor,
+          color: ColorsApp.backgroundColor,
         ),
         child: Column(
           children: [
@@ -171,18 +172,18 @@ class _CreateQuizState extends State<CreateQuiz> {
               padding: const EdgeInsets.all(16.0),
               child: TextFormField(
                 controller: _titleController,
-                style: TextStyle(color: AppTheme.primaryText),
+                style: TextStyle(color: ColorsApp.primaryText),
                 decoration: InputDecoration(
                   hintText: 'Title Quiz',
                   hintStyle: TextStyle(
-                    color: AppTheme.secondaryText,
+                    color: ColorsApp.secondaryText,
                     fontSize: 16,
                   ),
                   filled: true,
-                  fillColor: AppTheme.surfaceColor,
+                  fillColor: ColorsApp.surfaceColor,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: AppTheme.borderColor),
+                    borderSide: BorderSide(color: ColorsApp.borderColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -193,7 +194,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: AppTheme.borderColor),
+                    borderSide: BorderSide(color: ColorsApp.borderColor),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -209,20 +210,20 @@ class _CreateQuizState extends State<CreateQuiz> {
                   children: [
                     TextFormField(
                       controller: _questionsController,
-                      style: TextStyle(color: AppTheme.primaryText),
+                      style: TextStyle(color: ColorsApp.primaryText),
                       maxLines: null,
                       maxLengthEnforcement : MaxLengthEnforcement.none,
                       decoration: InputDecoration(
                         hintText: 'JSON Questions\n e.g.\n $exampleQuestions',
                         hintStyle: TextStyle(
-                          color: AppTheme.secondaryText,
+                          color: ColorsApp.secondaryText,
                           fontSize: 12,
                         ),
                         filled: true,
-                        fillColor: AppTheme.surfaceColor,
+                        fillColor: ColorsApp.surfaceColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: AppTheme.borderColor),
+                          borderSide: BorderSide(color: ColorsApp.borderColor),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -233,7 +234,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: AppTheme.borderColor),
+                          borderSide: BorderSide(color: ColorsApp.borderColor),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
